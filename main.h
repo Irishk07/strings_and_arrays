@@ -1,6 +1,10 @@
+#ifndef MAIN_H_
+#define MAIN_H_
+
 #include <stdio.h>
 
 const int SIZE_OF_BUF = 256;
+const int ZERO = 0;
 
 
 int my_puts(const char *str);
@@ -21,4 +25,10 @@ char *my_fgets(char *str, int n, FILE *stream);
 
 char *my_strdup(const char *s);
 
+ void *my_recalloc(void *ptr, size_t new_size, size_t old_size);
+
 ssize_t my_getline(char ** lineptr, size_t * n, FILE * stream);
+
+const char * my_strstr(const char *haystack, const char *needle);
+
+#endif //MAIN_H_

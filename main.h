@@ -31,4 +31,6 @@ ssize_t my_getline(char ** lineptr, size_t * n, FILE * stream);
 
 const char * my_strstr(const char *haystack, const char *needle);
 
+int my_atoi(const char *nptr);
+
 #endif //MAIN_H_

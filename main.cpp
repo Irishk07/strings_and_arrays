@@ -2,6 +2,7 @@
 #include "test.h"
 
 #include <assert.h>
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -239,8 +240,35 @@ const char * my_strstr(const char *haystack, const char *needle) {
     return NULL;
 }
 
+int my_atoi(const char *nptr) {
+    assert(nptr != NULL);
+
+    while(isspace(*nptr)) {
+        nptr++;
+    }
+
+    int sign = 1;
+    if (*nptr == '-') {
+        sign = -1;
+        nptr++;
+    }
+    else if (*nptr == '+') {
+        nptr++;
+    }
+
+    int num = 0;
+    for ( ; *nptr != '\0'; ++nptr) {
+        if (!('0' <= *nptr && *nptr <= '9')) {
+            return 0;
+        }
+
+        num = (num * 10) + *nptr - '0';
+    }
+
+    return sign * num;
+}
 
 int main() {
-    test();
+    //test();
     return 0;
 }

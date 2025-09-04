@@ -240,6 +240,62 @@ const char * my_strstr(const char *haystack, const char *needle) {
     return NULL;
 }
 
+const char * my_strstr_2(const char *haystack, const char *needle) {
+    assert(haystack != NULL);
+    assert(needle != NULL);
+
+    if (*needle == '\0') {
+        return haystack;
+    }
+
+    const char * temp = needle;
+
+    int cnt_entering [CNT_SYMBOLS] = {};
+    size_t size_needle = 0;
+    for ( ; *needle != '\0'; ++needle) {
+        if (cnt_entering[(int)*needle] == 0) {
+            cnt_entering[(int)*needle] = 1;
+        }
+        ++size_needle;
+    } 
+
+    size_t size_haystack = my_strlen(haystack);
+
+    needle = temp;
+
+    // printf("%zu %s\n", size_needle, needle);
+    // printf("%zu %s\n", size_haystack, haystack);
+
+    for (size_t i = 0; haystack[i] != '\0'; ++i) {
+        for (size_t j = size_needle - 1; i + j < size_haystack; --j) {
+            //printf("i, j: %zu %zu\n", i, j);
+
+            if (needle[j] != haystack[i + j] && cnt_entering[(int)haystack[i + j]] == 0 && j == size_needle - 1) {
+                //printf("cnt: %d\n", cnt_entering[(int)haystack[i + j]]);
+
+                i += size_needle - 1;
+
+                // if (i + j > size_haystack) {
+                //     return NULL;
+                // }
+
+                break;
+            }
+            else if (needle[j] != haystack[i + j]){
+                //printf("cnt: %d\n", cnt_entering[(int)haystack[i + j]]);
+
+                break;
+            }
+
+            if (j == 0) {
+                return haystack + i;
+            }
+        }
+    }
+
+    return NULL;
+}
+
 int my_atoi(const char *nptr) {
     assert(nptr != NULL);
 
@@ -269,6 +325,7 @@ int my_atoi(const char *nptr) {
 }
 
 int main() {
-    //test();
+    test();
+    //my_strstr_2("bcca", "cc");
     return 0;
 }

@@ -26,14 +26,14 @@ void test() {
 
     while (cnt_test-- > 0) {
 
-        char haystack [MAX_LEN+1] = {};
+        char haystack [MAX_LEN + 1] = {};
         generate_random_string(haystack);
 
-        char needle [MAX_LEN+1] = {};
+        char needle [MAX_LEN + 1] = {};
         generate_random_string(needle);
 
         char * need = strstr(haystack, needle);
-        const char * my = my_strstr(haystack, needle);
+        const char * my = my_strstr_2(haystack, needle);
         if (need != my) {
             printf("%s %s\n", haystack, needle);
             printf("need: %p\n", need);

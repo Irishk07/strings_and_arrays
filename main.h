@@ -5,6 +5,7 @@
 
 const int SIZE_OF_BUF = 256;
 const int ZERO = 0;
+const int CNT_SYMBOLS = 256;
 
 
 int my_puts(const char *str);
@@ -30,6 +31,8 @@ char *my_strdup(const char *s);
 ssize_t my_getline(char ** lineptr, size_t * n, FILE * stream);
 
 const char * my_strstr(const char *haystack, const char *needle);
+
+const char * my_strstr_2(const char *haystack, const char *needle);
 
 int my_atoi(const char *nptr);
 

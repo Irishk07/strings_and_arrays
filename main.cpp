@@ -162,7 +162,7 @@ char *my_strdup(const char *s) {
     return memset(point + old_size, ZERO, new_size - old_size);
  }
 
-ssize_t my_getline(char ** lineptr, size_t * n, FILE * stream) {
+ssize_t my_getline(char ** const lineptr, size_t * n, FILE * stream) {
     if (n == NULL || lineptr == NULL) {
         return -1;
     }
@@ -176,7 +176,6 @@ ssize_t my_getline(char ** lineptr, size_t * n, FILE * stream) {
     while ((ch = getc(stream)) != '\n' && ch != EOF) {
         if (*n < size + 1) {
             char * temp = (char*)my_recalloc(*lineptr, (*n == 0) ? SIZE_OF_BUF : 2 * (*n), *n);
-
             if (temp == NULL) {
                 return -1;
             }
@@ -185,7 +184,7 @@ ssize_t my_getline(char ** lineptr, size_t * n, FILE * stream) {
             *lineptr = temp;
         }
 
-        **lineptr++ = (char)ch;
+        *((*lineptr)++) = (char)ch;
         size++;
     }
 
@@ -253,9 +252,8 @@ const char * my_strstr_2(const char *haystack, const char *needle) {
     int cnt_entering [CNT_SYMBOLS] = {};
     size_t size_needle = 0;
     for ( ; *needle != '\0'; ++needle) {
-        if (cnt_entering[(int)*needle] == 0) {
-            cnt_entering[(int)*needle] = 1;
-        }
+        cnt_entering[(int)*needle] = 1;
+
         ++size_needle;
     } 
 
@@ -263,27 +261,15 @@ const char * my_strstr_2(const char *haystack, const char *needle) {
 
     needle = temp;
 
-    // printf("%zu %s\n", size_needle, needle);
-    // printf("%zu %s\n", size_haystack, haystack);
-
     for (size_t i = 0; haystack[i] != '\0'; ++i) {
         for (size_t j = size_needle - 1; i + j < size_haystack; --j) {
-            //printf("i, j: %zu %zu\n", i, j);
 
             if (needle[j] != haystack[i + j] && cnt_entering[(int)haystack[i + j]] == 0 && j == size_needle - 1) {
-                //printf("cnt: %d\n", cnt_entering[(int)haystack[i + j]]);
-
                 i += size_needle - 1;
-
-                // if (i + j > size_haystack) {
-                //     return NULL;
-                // }
 
                 break;
             }
             else if (needle[j] != haystack[i + j]){
-                //printf("cnt: %d\n", cnt_entering[(int)haystack[i + j]]);
-
                 break;
             }
 
@@ -324,8 +310,45 @@ int my_atoi(const char *nptr) {
     return sign * num;
 }
 
+char *my_strtok(char * str, const char * delim) {
+    assert(delim != NULL);
+
+    static char * string = NULL;
+
+    if (str != NULL) {
+        string = str;
+    }
+
+    int cnt_delim [CNT_SYMBOLS] = {};
+    for ( ; *delim != '\0'; ++delim) {
+        cnt_delim[(int)*delim] = 1;
+    }
+
+    if (*string == '\0') {
+        return NULL;
+    }
+
+    char * temp = string;
+    for ( ; *string != '\0'; ++string) {
+        if (cnt_delim[(int)*string]) {
+            *(string++) = '\0';
+
+            break;
+        }
+    }
+
+    return temp;
+}
+
 int main() {
-    test();
-    //my_strstr_2("bcca", "cc");
+    //test();
+
+    // char str [] = "I love MIPT very very very much^   ";
+    // char * res = my_strtok(str, "^ ");
+
+    // do {
+    //     printf("%s\n", res);
+    // } while ((res = my_strtok(NULL, "^ ")) != NULL);
+    
     return 0;
 }

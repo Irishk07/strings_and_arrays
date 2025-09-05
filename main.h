@@ -36,4 +36,6 @@ const char * my_strstr_2(const char *haystack, const char *needle);
 
 int my_atoi(const char *nptr);
 
+char *my_strtok(char * str, const char * delim);
+
 #endif //MAIN_H_

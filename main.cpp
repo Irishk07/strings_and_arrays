@@ -137,7 +137,7 @@ char *my_fgets(char *str, int n, FILE *stream) {
 char *my_strdup(const char *s) {
     assert(s != NULL);
 
-    char *point_on_s = (char*)calloc(my_strlen(s), sizeof(char));
+    char *point_on_s = (char*)calloc(my_strlen(s) + 1, sizeof(char));
 
     if (point_on_s == NULL) {
         return NULL;

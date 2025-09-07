@@ -197,6 +197,18 @@ ssize_t my_getline(char ** const lineptr, size_t * n, FILE * stream) {
     return (ssize_t)size;
 }
 
+int my_strncmp(const char *s1, const char *s2, size_t n) {
+    if (n == 0) {
+        return 0;
+    }
+
+    while(--n > 0 && *s1 != '\0' && (*s1 == *s2)) {
+        s1++;
+        s2++;
+    }
+    return (*s1 - *s2);
+}
+
 const char * my_strstr(const char *haystack, const char *needle) {
     assert(haystack != NULL);
     assert(needle != NULL);
@@ -239,7 +251,7 @@ const char * my_strstr(const char *haystack, const char *needle) {
     return NULL;
 }
 
-const char * my_strstr_2(const char *haystack, const char *needle) {
+const char * my_strstr_mur(const char *haystack, const char *needle) {
     assert(haystack != NULL);
     assert(needle != NULL);
 
@@ -249,33 +261,30 @@ const char * my_strstr_2(const char *haystack, const char *needle) {
 
     const char * temp = needle;
 
-    int cnt_entering [CNT_SYMBOLS] = {};
-    size_t size_needle = 0;
-    for ( ; *needle != '\0'; ++needle) {
-        cnt_entering[(int)*needle] = 1;
+    size_t size_needle = my_strlen(needle);
+    size_t jump_table [CNT_SYMBOLS] = {};
+    for (int i = 0; i < CNT_SYMBOLS; ++i) {
+        jump_table[i] = size_needle;
+    }
 
-        ++size_needle;
+    for (size_t i = 0; needle[i] != '\0'; ++i) {
+        jump_table[(int)needle[i]] = size_needle - i - 1;
     } 
 
     size_t size_haystack = my_strlen(haystack);
 
     needle = temp;
+    for (size_t i = size_needle - 1; haystack[i] != '\0'; ++i) {
+        while (i < size_haystack && jump_table[(int)haystack[i]] != 0) {
+            i += jump_table[(int)haystack[i]];
+        }
 
-    for (size_t i = 0; haystack[i] != '\0'; ++i) {
-        for (size_t j = size_needle - 1; i + j < size_haystack; --j) {
+        if (i >= size_haystack) {
+            break;
+        }
 
-            if (needle[j] != haystack[i + j] && cnt_entering[(int)haystack[i + j]] == 0 && j == size_needle - 1) {
-                i += size_needle - 1;
-
-                break;
-            }
-            else if (needle[j] != haystack[i + j]){
-                break;
-            }
-
-            if (j == 0) {
-                return haystack + i;
-            }
+        if (my_strncmp(haystack + i - (size_needle - 1), needle, size_needle) == 0) {
+            return haystack + i - (size_needle - 1);
         }
     }
 
@@ -341,14 +350,6 @@ char *my_strtok(char * str, const char * delim) {
 }
 
 int main() {
-    //test();
-
-    // char str [] = "I love MIPT very very very much^   ";
-    // char * res = my_strtok(str, "^ ");
-
-    // do {
-    //     printf("%s\n", res);
-    // } while ((res = my_strtok(NULL, "^ ")) != NULL);
-    
+    test();
     return 0;
 }

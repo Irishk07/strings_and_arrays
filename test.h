@@ -5,4 +5,6 @@ void generate_random_string(char *buf);
 
 void test();
 
+void test_ncmp();
+
 #endif //TEST_H_

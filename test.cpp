@@ -1,6 +1,6 @@
 #include "test.h"
 
-#include "main.h"
+#include "string_functions.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -55,7 +55,7 @@ void test_ncmp() {
         char s2 [MAX_LEN + 1] = {};
         generate_random_string(s2);
 
-        int cnt = rand() % (MAX_LEN);
+        size_t cnt = (size_t)(rand() % (MAX_LEN));
 
         int ref = strncmp(s1, s2, cnt);
         int my = my_strncmp(s1, s2, cnt);
@@ -75,7 +75,7 @@ void test_ncmp() {
             printf("%s %s\n", s1, s2);
             printf("ref: %d\n", ref);
             printf("my: %d\n", my);
-            printf("n: %d\n", cnt);
+            printf("n: %zu\n", cnt);
             break;
         }
     }

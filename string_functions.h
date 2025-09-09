@@ -1,5 +1,5 @@
-#ifndef MAIN_H_
-#define MAIN_H_
+#ifndef STRING_FUNCTIONS_H_
+#define STRING_FUNCTIONS_H_
 
 #include <stdio.h>
 
@@ -40,4 +40,4 @@ int my_atoi(const char *nptr);
 
 char *my_strtok(char * str, const char * delim);
 
-#endif //MAIN_H_
+#endif //STRING_FUNCTIONS_H_

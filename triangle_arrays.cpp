@@ -1,4 +1,4 @@
-#include "entartainment_with_arrays.h"
+#include "triangle_arrays.h"
 
 #include <stdio.h>
 

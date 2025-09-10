@@ -1,4 +1,4 @@
-#include "entartainment_with_arrays.h"
+#include "triangle_arrays.h"
 #include "string_functions.h"
 #include "test.h"
 
@@ -9,7 +9,7 @@
 #include <string.h>
 
 int main() {
-    //test();
+    // test();
 
     // int left_data[10] = {0, 
     //                      1, 2, 

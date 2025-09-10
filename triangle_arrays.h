@@ -1,5 +1,5 @@
-#ifndef ENTERTAINMENT_WITH_ARRAYS_H_
-#define ENTERTAINMENT_WITH_ARRAYS_H_
+#ifndef TRIANGLE_ARRAYS_H_
+#define TRIANGLE_ARRAYS_H_
 
 int left_triangle_index_element(int i, int j);
 
@@ -17,4 +17,4 @@ void right_triangle_set(int i, int j, int *data, int elem, int strok);
 
 int right_triangle_sum(int strok, int *data);
 
-#endif //ENTERTAINMENT_WITH_ARRAYS_H_
+#endif //TRIANGLE_ARRAYS_H_

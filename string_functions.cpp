@@ -158,7 +158,9 @@ char *my_strdup(const char *s) {
         return NULL;
     }
 
-    return memset(point + old_size, ZERO, new_size - old_size);
+    memset(point + old_size, ZERO, new_size - old_size);
+
+    return point;
  }
 
 ssize_t my_getline(char ** const lineptr, size_t * n, FILE * stream) {

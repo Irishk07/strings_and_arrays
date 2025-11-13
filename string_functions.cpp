@@ -163,33 +163,39 @@ char *my_strdup(const char *s) {
     return point;
  }
 
-ssize_t my_getline(char ** const lineptr, size_t * n, FILE * stream) {
+ssize_t my_getline(char ** const lineptr, size_t* n, FILE * stream) {
     if (n == NULL || lineptr == NULL) {
         return -1;
     }
     
     if (*lineptr == NULL) {
         *n = 0;
-    }
+    } 
 
     int ch = 0;
     size_t size = 0;
+
+    char* current_pos = *lineptr;
+
     while ((ch = getc(stream)) != '\n' && ch != EOF) {
         if (*n < size + 1) {
-            char * temp = (char*)my_recalloc(*lineptr, (*n == 0) ? SIZE_OF_BUF : 2 * (*n), *n);
+            char* temp = (char*)my_recalloc(*lineptr, (*n == 0) ? SIZE_OF_BUF : 2 * (*n), *n);
             if (temp == NULL) {
                 return -1;
             }
 
             *n = (*n == 0) ? SIZE_OF_BUF : 2 * (*n);
+
+            current_pos = temp + (current_pos - *lineptr);
             *lineptr = temp;
         }
+        *current_pos = (char)ch;
+        (current_pos)++;
 
-        *((*lineptr)++) = (char)ch;
         size++;
     }
 
-    **lineptr = '\0';
+    *current_pos = '\0';
 
     if (ferror(stream) != 0) {
         return -1;
